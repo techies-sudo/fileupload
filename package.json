@@ -1,0 +1,16 @@
+{
+  "name": "fileupload",
+  "version": "1.0.0",
+  "description": "**To start the server**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "yarn && cd client && yarn && yarn run build && rm -rf ../server/build && mv build ../server && cd ../server && yarn && pm2 start index.js -i max"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pm2": "^5.1.2"
+  }
+}

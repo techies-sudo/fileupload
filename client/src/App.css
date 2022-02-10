@@ -1,0 +1,68 @@
+.App {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.input-wrapper {
+  position: relative;
+  height: 500px;
+  width: 300px;
+  padding: 2px;
+  border: 1px dotted #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label.myLabel input[type="file"] {
+  position: absolute;
+  top: -1000px;
+}
+
+/***** Example custom styling *****/
+.myLabel {
+  border-radius: 4px;
+  background: #fff;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.myLabel i{
+  font-size: 3rem;
+}
+.myLabel:hover {
+  background: #fff;
+  cursor: pointer;
+}
+.myLabel:active {
+  background: #ccf;
+}
+
+.myLabel :valid + span {
+  color: #4a4;
+  font-size: 3rem;
+}
+.upload-button{
+  position: absolute;
+  bottom: 50px;
+  background-color: lightblue;
+  width: 150px;
+  height: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: none;
+  border-radius: 15px;
+}
+.error-alert{
+  padding: 6px;
+  width: 250px;
+  display: block;
+  text-align: center;
+  background-color: rgb(245, 150, 150);
+  border-radius: 5px;
+}
