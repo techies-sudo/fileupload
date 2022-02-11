@@ -1,0 +1,7 @@
+export const  REQUEST_API_FAILED = "REQUEST_API_FAILED"
+export const  REQUEST_API_LOADING = "REQUEST_API_LOADING"
+
+
+
+
+

@@ -5,7 +5,6 @@ import {
     FormLabel,
     Input,
     InputGroup,
-    HStack,
     InputRightElement,
     Stack,
     Button,
@@ -22,6 +21,7 @@ import {
   import { ChangeEvent, FormEvent, useState } from "react";
   import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
   import axios from "axios";
+import { loginUser } from "../../store/auth/actions";
   
   export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
@@ -42,30 +42,9 @@ import {
       });
     
     };
-    const onSubmit = (e: FormEvent) => {
-      e.preventDefault();
-     console.log(credentials)
-          axios
-          .post("http://localhost:5000/login", credentials, {
-          
-            onUploadProgress: (e: ProgressEvent) => {
-              if(Math.round((e.loaded * 100) / e.total)===100||e.loaded===0){
-                  setLoading(false)
-              
-              }
-              else{
-                  setLoading(true)
-              }}}
-          )
-          .then((res) => {
-            console.log(res);
-            setError(null);
-            setLoading(false);
-          })
-          .catch((err) => {
-            setError(err.message);
-          });
-      
+    const onSubmit = async (e: FormEvent) => {
+      e.preventDefault()
+      loginUser(credentials.email,credentials.password)
     };
     return (
       <Flex

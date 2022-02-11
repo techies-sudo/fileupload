@@ -22,6 +22,7 @@ import {
 import { ChangeEvent, FormEvent, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import axios from "axios";
+import { registerUser } from "../../store/auth/actions";
 
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);
@@ -59,26 +60,7 @@ export default function SignupCard() {
         setvalidate(true);
       }
     if(validate){
-        axios
-        .post("http://localhost:5000/register", credentials, {
-        
-          onUploadProgress: (e: ProgressEvent) => {
-            if(Math.round((e.loaded * 100) / e.total)===100||e.loaded===0){
-                setLoading(false)
-            
-            }
-            else{
-                setLoading(true)
-            }}}
-        )
-        .then((res) => {
-          console.log(res);
-          setError(null);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setError(err.message);
-        });
+       registerUser(credentials.email,credentials.password,credentials.rePassword,credentials.fname,credentials.lname)
     }
   };
   return (

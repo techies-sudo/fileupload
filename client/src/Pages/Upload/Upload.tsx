@@ -1,6 +1,5 @@
 import {
     Alert,
-  AlertDescription,
   AlertIcon,
   AlertTitle,
   Box,
@@ -15,6 +14,7 @@ import {
 import axios from "axios";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import "../../App.css";
+import { uploadFile } from "../../store/auth/actions";
 
 function Upload() {
   const [error, setError] = useState<null | string>(null);
@@ -29,23 +29,7 @@ function Upload() {
       newFiles.forEach((file: File) => {
         data.append("data", file);
       });
-      axios
-        .post("http://localhost:5000/upload", data, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          onUploadProgress: (e: ProgressEvent) => {
-            setLoading(Math.round((e.loaded * 100) / e.total));
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          setError(null);
-          setLoading(0);
-        })
-        .catch((err) => {
-          setError(err.message);
-        });
+     uploadFile(data)
     }
   };
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
