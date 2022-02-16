@@ -1,12 +1,18 @@
 const express = require('express')
 const cors = require('cors')
-const multer = require('multer')
 const path = require('path')
-const registerRouter = require('./routes/register')
 const morgan = require('morgan')
+const dotenv = require('dotenv')
+const {PrismaClient} = require('@prisma/client') 
+const registerRouter = require('./routes/register')
 const loginRouter = require('./routes/login')
+const uploadRouter = require('./routes/upload')
+
+dotenv.config()
+
+const prisma = new PrismaClient()
 const app = express()
-const port = 5000
+const port = process.env.PORT||5000
 
 app.use(cors(
     {
@@ -16,31 +22,11 @@ app.use(cors(
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.static(path.join(__dirname,"build")))
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-    cb(null, 'public')
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' +file.originalname )
-  }
-})
 
-const upload = multer({ storage }).array('data') // name should be same as formData
 app.get("/*",(req,res)=>{
     res.sendFile(path.join(__dirname,"build","index.html"))
 })
 app.use("/register",registerRouter)
 app.use("/login",loginRouter)
-app.post('/upload',(req, res) => {
-    upload(req,res,(err)=>{
-        if (err instanceof multer.MulterError) {
-            return res.status(500).json(err)
-        } else if (err) {
-            return res.status(500).json(err)
-        }
-   return res.status(200).send(req.files)
-    })
-
-
-})
+app.use('/upload',uploadRouter)
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

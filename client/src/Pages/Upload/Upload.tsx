@@ -11,8 +11,8 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import axios from "axios";
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { useDispatch } from "react-redux";
 import "../../App.css";
 import { uploadFile } from "../../store/auth/actions";
 
@@ -21,6 +21,7 @@ function Upload() {
   const [files, setFiles] = useState<FileList | null>(null);
   const [disable, setDisable] = useState(true);
   const [loading, setLoading] = useState(0);
+  const dispatch = useDispatch()
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     const data = new FormData();
@@ -29,7 +30,7 @@ function Upload() {
       newFiles.forEach((file: File) => {
         data.append("data", file);
       });
-     uploadFile(data)
+     dispatch(uploadFile(data))
     }
   };
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {

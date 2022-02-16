@@ -21,12 +21,13 @@ import {
 } from "@chakra-ui/react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import axios from "axios";
 import { registerUser } from "../../store/auth/actions";
+import { useDispatch } from "react-redux";
 
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);
   const [reShowPassword, setReShowPassword] = useState(false);
+  const dispatch = useDispatch()
   const [error, setError] = useState<{
     title: string;
     description: string;
@@ -60,7 +61,7 @@ export default function SignupCard() {
         setvalidate(true);
       }
     if(validate){
-       registerUser(credentials.email,credentials.password,credentials.rePassword,credentials.fname,credentials.lname)
+       dispatch(registerUser(credentials.email,credentials.password,credentials.rePassword,credentials.fname,credentials.lname))
     }
   };
   return (
